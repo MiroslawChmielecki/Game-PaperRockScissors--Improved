@@ -4,7 +4,8 @@
 let conditionsDiv = document.querySelector("#conditions");    //liczba rund potrzebnych by wygrac
 let outputDiv = document.querySelector('#output');            //info o stanie rundy
 let resultDiv = document.querySelector('#result');            //rezultat gry 
-let outputAllGame = document.querySelector('.outputAllGame'); //info kto wygral cala gre
+let outputAllGame = document.querySelector('.outputAllGame'); //info kto wygral cala gre w modalu
+let scoreAllGame = document.querySelector('#scoreAllGame');   //info kto wygral cala gre na stronie
 let modal = document.querySelector('#modal-overlay');
 let modals = document.querySelectorAll('.modal');
 let table = document.querySelector('#tableInModal');          //tabela w modalu
@@ -45,20 +46,20 @@ function playerMove(ourMove){
       params.computerMove = "scissor";
     }
     //sprawdzam kto wygral, do zmiennej params.text dodaje tekst oraz 1 punkt do gracza lub komputera
+    
     if (params.computerMove == params.ourMove) {    
       params.text = "DRAW";
       params.EachGameResult = "DRAW";
-    } else if ((params.computerMove == "paper" && params.ourMove == "rock") 
-            || (params.computerMove == "rock" && params.ourMove == "scissor") 
-            || (params.computerMove == "scissor" && params.ourMove == "paper")) {
-              params.text  = "You LOST this round: You played " + params.ourMove + ", Computer played " + params.computerMove;
-              params.EachGameResult = "DEFEAT";
-              params.computerPoints++;
-    } else {
-      params.text = "You WIN this round: You played " + params.ourMove + ", Computer played " + params.computerMove;
-      params.EachGameResult = "WIN";
-      params.playerPoints++;
-     } 
+    }else if ((params.computerMove == "paper" && params.ourMove == "rock") 
+      || (params.computerMove == "rock" && params.ourMove == "scissor") 
+      || (params.computerMove == "scissor" && params.ourMove == "paper")) {
+      params.text  = "You LOST this round: You played " + params.ourMove + ", Computer played " + params.computerMove;
+      params.EachGameResult = "DEFEAT";
+      params.computerPoints++;
+    }else {  params.text = "You WIN this round: You played " + params.ourMove + ", Computer played " + params.computerMove;
+        params.EachGameResult = "WIN";
+        params.playerPoints++;
+      }
     
     //sprawdzam kto wygrał całość gry
     if (params.computerPoints == params.rounds) {
@@ -66,11 +67,13 @@ function playerMove(ourMove){
       params.isFinished = true;     //to gra jest skończona
       params.win = "You LOST the ENTIRE GAME";
       outputAllGame.classList.add('looser');
-      } else if (params.playerPoints == params.rounds) {
+      scoreAllGame.classList.add('looser');
+    } else if (params.playerPoints == params.rounds) {
       modal.classList.add('show');
       params.isFinished = true;     //to gra jest skończona
       params.win = "You WON the ENTIRE GAME";
       outputAllGame.classList.add('winner');
+      scoreAllGame.classList.add('winner');
     }
     //przekazanie do funkcji display tekstu z info kto wygral runde
     // przekazanie info czy ktos wygral gre
@@ -91,9 +94,11 @@ function playerMove(ourMove){
 //funkcja display wyswietla tekst i wynik koncowy
  function display(text, win) {
   outputDiv.innerHTML = "";             //czysci po kazdej rundzie outputDiv
+  scoreAllGame.innerHTML = "";
   outputDiv.append(params.text);        //append dodaje params.text do outputDiv
   if(params.win){
-    outputAllGame.append(params.win);  
+    outputAllGame.append(params.win);
+    scoreAllGame.append(params.win);
   }
   resultDiv.innerHTML =  params.playerPoints + " - " + params.computerPoints; 
   }; 
@@ -114,15 +119,34 @@ function playerMove(ourMove){
   //Klikniecie buttona z wyborem
    for(let i = 0; i < buttons.length; i++){
     buttons[i].addEventListener("click",function() {
+      params.ourMove = this.getAttribute("data-move");
       if (!params.isFinished) {                        
-        params.ourMove = this.getAttribute("data-move");  
           playerMove(params.ourMove);
           params.currentRound++;   
           } else {
          outputDiv.innerHTML = "Game over, please press the New Game button !"
-        }
-      })
-   };
+         buttonsField.classList.remove('show');
+         scoreField.classList.remove('show');
+         conditionsDiv.innerHTML = "";
+         scoreAllGame.innerHTML = "";
+         }
+        
+       /*  w zaleznosci od wyniku rundy dodaje klase do kliknietego buttona 
+        i po opoznieniu usuwa ją */
+        if (params.computerMove == params.ourMove) {                        
+          buttons[i].classList.add('draw-circle');
+           setTimeout(function(){buttons[i].classList.remove('draw-circle')}, 200);  
+          } else if ((params.computerMove == "paper" && params.ourMove == "rock") 
+                  || (params.computerMove == "rock" && params.ourMove == "scissor") 
+                  || (params.computerMove == "scissor" && params.ourMove == "paper")){
+              buttons[i].classList.add('lost-circle');
+              setTimeout(function(){buttons[i].classList.remove('lost-circle')}, 200); 
+          }else { buttons[i].classList.add('win-circle');
+              setTimeout(function(){buttons[i].classList.remove('win-circle')}, 200);
+      }})
+    };
+
+  
 
    //buttonNewGame
   buttonNewGame.addEventListener("click", function() {
@@ -136,7 +160,9 @@ function playerMove(ourMove){
     params.progress.length = 0;  //zeruje elementy tablicy
     outputAllGame.classList.remove('looser');
     outputAllGame.classList.remove('winner');
-  if (isNaN(params.rounds) || params.rounds == null || params.rounds == '') {                    
+    scoreAllGame.classList.remove('looser');
+    scoreAllGame.classList.remove('winner');
+    if (isNaN(params.rounds) || params.rounds == null || params.rounds == '') {                    
       params.isFinished = true;
       conditionsDiv.innerHTML = " Click button New Game again and enter CORRECT number !!";
     }else{
@@ -145,6 +171,7 @@ function playerMove(ourMove){
       buttonsField.classList.add('show');   // oraz pole z buttonami
       scoreField.classList.add('show');     // oraz pole z wynikiem
       params.win = "";   //resetowanie info kto wygral cala gre
+      scoreAllGame.innerHTML="";
     }
   });
    
@@ -175,6 +202,5 @@ var hideModal = function(event){
 	
 	
 	
-  
   
   
