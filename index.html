@@ -1,48 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-  
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
     <title>Paper-Rock-Scissors improved by M.Ch.</title>
   </head>
-  
-    <body>
-        <header class="mainHeader">
-            <h1>Rock Paper Scissors</h1>
-        </header>
-        
-        <div class="result-board">
-            <div id="conditions">Click button New Game, enter number of rounds<br> and start the GAME</div>
-            
-            
-            <div class="score">
-                <span class="user">USER</span>
-                <div id="result">
-                    0 - 0
-                </div>
-                <span class="comp">COMP</span>
-            </div>
-            <div id="output"></div>
-            <div id="scoreAllGame"></div>
-        </div>
 
-        <div class="overlay" id="modal-overlay">
-            <div class="modal">
-                <a href="#" class="close">x</a>
-                <div class="outputAllGame"></div>
-                <table id="tableInModal"></table>
-            </div>
-        </div>
+  <body>
+    <header class="mainHeader">
+      <h1>Rock Paper Scissors</h1>
+    </header>
 
-        <div class="but-choices">
-            <button  class="control player-move" data-move="paper"><img src="images/paperIcon2.png"><p>PAPER</p></button>
-            <button  class="control player-move" data-move="rock"><img src="images/rock3.png"><p>ROCK</p></button>
-            <button  class="control player-move" data-move="scissor"><img src="images/scissors.png"><p>SCISSORS</p></button>
-        </div>
-        <button id="newGame">New Game</button>
+    <div class="result-board">
+      <div id="conditions">
+        Click button New Game, enter number of rounds<br />
+        and start the GAME
+      </div>
 
-    </body>
-    <script src="js/script.js"></script>  
+      <div class="score">
+        <span class="user">USER</span>
+        <div id="result">
+          0 - 0
+        </div>
+        <span class="comp">COMP</span>
+      </div>
+      <div id="output"></div>
+      <div id="scoreAllGame"></div>
+    </div>
+
+    <div class="overlay" id="modal-overlay">
+      <div class="modal">
+        <a href="#" class="close">x</a>
+        <div class="outputAllGame"></div>
+        <table id="tableInModal"></table>
+      </div>
+    </div>
+
+    <div class="but-choices">
+      <button class="control player-move" data-move="paper">
+        <img src="images/PaperIcon2.png" />
+        <p>PAPER</p>
+      </button>
+      <button class="control player-move" data-move="rock">
+        <img src="images/rock3.png" />
+        <p>ROCK</p>
+      </button>
+      <button class="control player-move" data-move="scissor">
+        <img src="images/scissors.png" />
+        <p>SCISSORS</p>
+      </button>
+    </div>
+    <button id="newGame">New Game</button>
+  </body>
+  <script src="js/script.js"></script>
 </html>
