@@ -124,7 +124,7 @@ function playerMove(ourMove){
           playerMove(params.ourMove);
           params.currentRound++;   
           } else {
-         outputDiv.innerHTML = "Game over, please press the New Game button !"
+         outputDiv.innerHTML = "GAME OVER, please press the New Game button !"
          buttonsField.classList.remove('show');
          scoreField.classList.remove('show');
          conditionsDiv.innerHTML = "";
@@ -162,7 +162,7 @@ function playerMove(ourMove){
     outputAllGame.classList.remove('winner');
     scoreAllGame.classList.remove('looser');
     scoreAllGame.classList.remove('winner');
-    if (isNaN(params.rounds) || params.rounds == null || params.rounds == '') {                    
+    if (isNaN(params.rounds) || params.rounds == null || params.rounds == '' || params.rounds == 0) {                    
       params.isFinished = true;
       conditionsDiv.innerHTML = " Click button New Game again and enter CORRECT number !!";
     }else{
